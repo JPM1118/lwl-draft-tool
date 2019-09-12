@@ -1,0 +1,48 @@
+{
+  "name": "LWL Draft Tool",
+  "version": "1.0",
+  "description": "Update a database full of NHL player information to reflect who has been taken in a fantasy draft.",
+  "permissions": [
+    "tabs",
+    "storage",
+    "declarativeContent",
+    "activeTab",
+    "https://lvh.me/"
+  ],
+  "commands": {},
+  "background": {
+    "scripts": [
+      "background.js"
+    ],
+    "persistent": false
+  },
+  "page_action": {
+    "default_icon": {
+      "16": "images/stick16.png",
+      "32": "images/stick32.png",
+      "48": "images/stick48.png",
+      "128": "images/stick128.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.clickydraft.com/*"
+      ],
+      "js": [
+        "clicky.js",
+        "test.js"
+      ]
+    }
+  ],
+  "icons": {
+    "16": "images/stick16.png",
+    "32": "images/stick32.png",
+    "48": "images/stick48.png",
+    "128": "images/stick128.png"
+  },
+  "web_accessible_resources": [
+    "images/*"
+  ],
+  "manifest_version": 2
+}
