@@ -1,7 +1,7 @@
 const refreshRouter = require('express').Router();
 const fs = require('fs');
-const myPlayers = require('../data/myPlayers.json');
-const takenPlayers = require('../data/takenPlayers.json');
+// const myPlayers = require('../data/myPlayers.json');
+// const takenPlayers = require('../data/takenPlayers.json');
 
 refreshRouter.post('/', (req, res, next) => {
   const { name } = req.body.data;
