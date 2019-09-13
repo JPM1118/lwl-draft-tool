@@ -3,4 +3,5 @@ module.exports = (app) => {
   app.use('/getGoalies', require('./getGoalies'))
   app.use('/addDraftKit', require('./addDraftKit'))
   app.use('/refreshPlayerList', require('./refreshPlayerList'))
+  app.use('/auth', require('./auth'))
 };

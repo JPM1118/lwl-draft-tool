@@ -1,23 +1,19 @@
 const refreshRouter = require('express').Router();
 const fs = require('fs');
-const path = require('path')
 const myPlayers = require('../data/myPlayers.json');
 const takenPlayers = require('../data/takenPlayers.json');
 
 refreshRouter.post('/', (req, res, next) => {
-  const { nameArray } = req.body.data;
-  console.log(path.normalize(`../${__dirname}`));
+  const { name } = req.body.data;
   let fileName;
   const updateArray = (array) => {
+    console.log(array)
     let newArray = [...array];
-    for (const name of nameArray) {
-      if (!array.includes(name)) {
-        newArray = [...newArray, name]
-      }
+    if (!array.includes(name)) {
+      newArray = [...newArray, name]
     }
     return newArray
   }
-  console.log(updateArray(takenPlayers))
   if (req.body.data.isMine) {
     fileName = './data/myPlayers.json';
     fs.writeFile(fileName, updateArray(myPlayers), err => console.error(err));
