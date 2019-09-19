@@ -1,0 +1,22 @@
+@import '../../variables.scss';
+
+$facebookBlue: #3C5A99;
+
+.content{
+  width: 95%;
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.facebookBtn{
+  composes: btn from '../../global.scss';
+  color: white;
+  border-color: $facebookBlue;
+  background-color: $facebookBlue;
+  &:hover{
+    color: $facebookBlue;
+    background-color: white;
+  }
+  
+}

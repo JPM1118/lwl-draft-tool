@@ -13,7 +13,8 @@ const userSchema = new Schema({
 userSchema.static('findOrCreate', async function (profile) {
     const User = require('./User.js')
     let user = await User.find({ fbId: profile.id })
-    if (user) {
+    console.log('user', user)
+    if (user.length > 0) {
         return user
     } else {
         user = new User({

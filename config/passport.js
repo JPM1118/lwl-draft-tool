@@ -18,10 +18,12 @@ passport.use(new FacebookStrategy({
 },
   async function (accessToken, refreshToken, profile, done) {
     try {
+      const User = require('../models/User');
       const user = await User.findOrCreate(profile);
+
       const sessionUser = {
         userId: user.id,
-        userName: profile.first_name
+        userName: profile.displayName
       }
       done(null, sessionUser)
     } catch (e) {
