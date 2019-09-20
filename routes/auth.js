@@ -17,6 +17,14 @@ authRouter.get('/facebook/callback',
     successRedirect: `${process.env.FRONT_URL}`,
     failureRedirect: `${process.env.FRONT_URL}`
   }));
+
+authRouter.get('/google', passport.authenticate('google', { scope: ['profile'] }));
+authRouter.get('/google/callback',
+  passport.authenticate('google', {
+    successRedirect: `${process.env.FRONT_URL}`,
+    failureRedirect: `${process.env.FRONT_URL}`
+  }));
+
 authRouter.get('/logout', (req, res, next) => {
   req.logout()
   res.status(200).send('You have been logged out.')

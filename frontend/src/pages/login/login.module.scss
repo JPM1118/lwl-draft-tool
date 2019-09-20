@@ -1,6 +1,7 @@
 @import '../../variables.scss';
 
 $facebookBlue: #3C5A99;
+$googleRed: #db3236;
 
 .content{
   width: 95%;
@@ -14,9 +15,18 @@ $facebookBlue: #3C5A99;
   color: white;
   border-color: $facebookBlue;
   background-color: $facebookBlue;
+  width: 160px;
   &:hover{
     color: $facebookBlue;
     background-color: white;
   }
-  
+}
+
+.googleBtn {
+  composes: facebookBtn;
+  border-color: $googleRed;
+  background-color: $googleRed;
+  &:hover{
+    color: $googleRed;
+  }
 }
