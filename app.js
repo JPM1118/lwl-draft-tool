@@ -28,7 +28,13 @@ app.use(
     }),
   }),
 );
-app.use(bodyParser.json());
+app.use(express.json({ limit: '50mb' }))
+// app.use(bodyParser.urlencoded({
+//   extended: true,
+//   limit: '500kb'
+// }))
+// app.use(bodyParser.json());
+
 app.use(passport.initialize());
 app.use(passport.session());
 require('./routes')(app);

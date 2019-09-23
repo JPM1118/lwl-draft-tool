@@ -1,0 +1,26 @@
+@import '../../variables.scss';
+
+.container{
+  display: grid;
+  grid-template-columns: 17rem repeat(3, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  grid-template-areas: 
+    "header header header header"
+    "myTeam availablePlayers availablePlayers availablePlayers"
+    "myTeam availablePlayers availablePlayers availablePlayers"
+    "myTeam availablePlayers availablePlayers availablePlayers"
+}
+.header{
+  grid-area: header;
+  border: 1px solid $darkGreen;
+  height: 25vh;
+}
+.myTeam{
+  grid-area: myTeam;
+  border: 1px solid $mediumGreen;
+
+}
+.availablePlayers{
+  grid-area: availablePlayers;
+  border: 1px solid $lightGreen;
+}

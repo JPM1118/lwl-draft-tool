@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import DraftTool from './pages/DraftTool';
+import DraftTool from './pages/draftTool/DraftTool';
 import Login from './pages/login/Login';
 import DetectExtension from './pages/DetectExtension';
 
