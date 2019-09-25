@@ -4,6 +4,7 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 require('dotenv').config();
 
 passport.serializeUser((user, done) => {
+
   done(null, user)
 })
 
@@ -41,7 +42,7 @@ passport.use(new GoogleStrategy({
       const user = await User.findOrCreate('google', profile);
 
       const sessionUser = {
-        userId: user.id,
+        userId: user._id,
         userName: profile.name
       }
       done(null, sessionUser)
@@ -50,6 +51,3 @@ passport.use(new GoogleStrategy({
     }
   }
 ))
-
-
-

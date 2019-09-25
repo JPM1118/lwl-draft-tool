@@ -16,9 +16,10 @@ chrome.runtime.onInstalled.addListener(function () {
 const sendNewPlayers = (data) => {
   let jsonData = JSON.stringify(data)
   console.log(jsonData)
-  return fetch('https://lvh.me/refreshPlayerList', {
+  return fetch('http://localhost:3000/refreshPlayerList', {
     method: 'POST',
     mode: 'cors',
+    credentials: 'include',
     headers: {
       'Content-Type': 'application/json'
     },

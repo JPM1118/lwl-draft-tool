@@ -15,7 +15,12 @@ const Header = (props) => {
       <span className={headerStyles.infoBtn} onClick={() => toggleShowInfo()}>
         <img src={infoIcon} alt="Info Button" />
       </span>
-      <button className={headerStyles.logoutBtn} onClick={props.logout}>LOGOUT</button>
+      <button
+        className={headerStyles.logoutBtn}
+        onClick={props.logout}
+        style={props.loggedIn ? { display: 'inline' } : { display: 'none' }}>
+        LOGOUT
+      </button>
       {showInfo && <Modal closeModal={toggleShowInfo}>
         <h2 style={{ textAlign: 'center' }}>Instructions</h2>
         <ul>

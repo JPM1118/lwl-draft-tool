@@ -9,6 +9,9 @@ const app = express();
 const MongoStore = require('connect-mongo')(session);
 require('./config/passport');
 
+//custom middleware
+const sse = require('./middleware/sse');
+
 mongoose.connect(
   `mongodb+srv://${process.env.MONGO_UN}:${process.env.MONGO_PW}@cluster0-y5hkl.mongodb.net/lwl-draft-tool?retryWrites=true`,
   { useNewUrlParser: true, useUnifiedTopology: true }
@@ -16,7 +19,7 @@ mongoose.connect(
   .then(console.log('MongoDB connected'))
   .catch(e => console.error(e))
 
-app.use(cors({ origin: ['https://lvh.me', 'http://localhost:3100', 'http://localhost:5000'], credentials: true }));
+app.use(cors({ origin: ['https://lvh.me', 'http://localhost:3100', 'http://localhost:5000', 'chrome-extension://mcodgdbeipnacaefflopimhekfcpclbc'], credentials: true }));
 app.use(
   session({
     maxAge: 1000 * 60 * 60 * 24 * 7 * 52, // 1 year
@@ -29,14 +32,9 @@ app.use(
   }),
 );
 app.use(express.json({ limit: '50mb' }))
-// app.use(bodyParser.urlencoded({
-//   extended: true,
-//   limit: '500kb'
-// }))
-// app.use(bodyParser.json());
-
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(sse);
 require('./routes')(app);
 
 app.listen(3000, () => console.log('connected to port 3000'))

@@ -44,7 +44,7 @@ const App = () => {
 
   return (
     <>
-      <Header logout={logoutRequest} />
+      <Header loggedIn={loggedIn} logout={logoutRequest} />
       {!isloading &&
         <div>
           {!loggedIn && <Login />}

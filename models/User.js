@@ -13,16 +13,15 @@ const userSchema = new Schema({
 userSchema.static('findOrCreate', async function (provider, profile) {
     const User = require('./User.js')
     const searchObject = provider === 'facebook' ? { fbId: profile.id } : { googleId: profile.id }
-    let user = await User.find(searchObject)
-    console.log('user', user)
-    if (user.length > 0) {
-        return user
-    } else {
+    let user = await User.findOne(searchObject)
+    if (!user) {
         user = new User({
             ...searchObject,
         })
         const savedUser = await user.save()
         return savedUser
+    } else {
+        return user
     }
 })
 
