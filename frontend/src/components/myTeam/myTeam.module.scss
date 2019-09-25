@@ -1,0 +1,20 @@
+@import '../../variables.scss';
+
+.container{
+  width: 100%;
+}
+.title{
+  text-align: center;
+  margin:0;
+  padding-bottom: .5rem;
+  color: $darkGreen;
+}
+.playerList{
+  font-size: .85rem;
+}
+.header{
+  display: flex;
+  justify-content: space-evenly;
+  padding: 0;
+  text-decoration: underline;
+}

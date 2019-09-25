@@ -1,8 +1,14 @@
 const streamRouter = require('express').Router();
+const Update = require('../utilities/UpdateNotifier');
 
 streamRouter.get('/', (req, res, next) => {
+  req.test = res;
   res.sseSetup();
-  res.sseSend('Hello World!')
+  Update.on('sendTakenPlayers', function (players) {
+    res.write("event: takenUpdate\n")
+    res.write("data: " + JSON.stringify(players) + "\n\n");
+  })
+  res.sseSendTest('Hello World!')
 })
 
 module.exports = streamRouter;

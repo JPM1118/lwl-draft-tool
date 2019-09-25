@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import draftToolStyles from './draftTool.module.scss';
 
+import DraftToolHeader from '../../components/draftToolHeader/draftToolHeader';
+import MyTeam from '../../components/myTeam/myTeam';
+
 
 const DraftTool = () => {
   const source = new EventSource('http://localhost:3000/stream', { withCredentials: true })
+
+  const [isSkaters, setIsSkaters] = useState(true)
   const [myTeam, setMyTeam] = useState(null)
   const [takenPlayers, setTakenPlayers] = useState(null)
   const [availablePlayers, setAvailablePlayers] = useState(null)
@@ -21,17 +26,28 @@ const DraftTool = () => {
     }
   }
   useEffect(() => {
-    fetchPlayerList()
-    source.onmessage = (e) => {
-      console.log(e)
+    // fetchPlayerList()
+    source.addEventListener('myTeamUpdate', e =>
+      console.log(e.data)
+    )
+    source.addEventListener('takenUpdate', e =>
+      console.log(e.data)
+    )
+    source.addEventListener("test", e => {
+      console.log(e.data)
     }
+    )
     // setMyTeam(data.myTeam)
   }, [])
 
   return (
     <div className={draftToolStyles.container}>
-      <div className={draftToolStyles.header}></div>
-      <div className={draftToolStyles.myTeam}></div>
+      <div className={draftToolStyles.header}>
+        <DraftToolHeader isSkaters={isSkaters} setIsSkaters={setIsSkaters} />
+      </div>
+      <div className={draftToolStyles.myTeam}>
+        <MyTeam myTeam={myTeam} />
+      </div>
       <div className={draftToolStyles.availablePlayers}></div>
     </div>
   )

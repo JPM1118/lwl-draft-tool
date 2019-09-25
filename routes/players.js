@@ -1,11 +1,14 @@
 const playerRouter = require('express').Router()
 const User = require('../models/User');
+const Update = require('../utilities/UpdateNotifier');
 
 playerRouter.get('/getPlayerList', async (req, res, next) => {
   try {
+    const draftKitFilter = require('../utilities/draftKitFilter')
     const user = await User.findById(req.user.userId)
-    // res.status(200).json({ "skaters": user.skaters, "goalies": user.goalies })
-    res.status(200).json({ "skaters": 'skaters', "goalies": 'goalies' })
+    const skaterData = draftKitFilter(user.skaters, 'skaters');
+    const goalieData = draftKitFilter(user.goalies, 'goalies');
+    res.status(200).json({ "skaters": skaterData, "goalies": goalieData })
   } catch (e) {
     console.error(e)
     res.status(500).send('error.')
@@ -14,23 +17,26 @@ playerRouter.get('/getPlayerList', async (req, res, next) => {
 
 playerRouter.post('/refreshPlayerList', async (req, res, next) => {
   try {
-    const isAuthenticated = req.isAuthenticated();
     const { name } = req.body.data;
     const user = await User.findById(req.user.userId);
-    const updateArray = (array) => {
-      console.log(array)
-      let newArray = [...array];
-      if (!array.includes(name)) {
-        newArray = [...newArray, name]
-      }
-      return newArray
-    }
+    const players = req.body.data.isSkater ? user.skaters : user.goalies;
+    const newPlayer = players.find(el => el.PLAYER === name)
+
+
     if (req.body.data.isMine) {
-      console.log('isMine', req.body.data)
+      const myTeam = user.myPlayers;
+      const newMyTeam = [...myTeam, newPlayer];
+      Update.emit('sendMyPlayers', newMyTeam)
+      user.myPlayers = newMyTeam;
+      await user.save()
     } else {
-      console.log('isNotMine', req.body.data)
+      const takenPlayers = user.takenPlayers;
+      const newTakenPlayers = [...takenPlayers, newPlayer];
+      Update.emit('sendTakenPlayers', newTakenPlayers);
+      user.takenPlayers = newTakenPlayers;
+      await user.save()
     }
-    res.status(200).send()
+    res.status(200).send('Got it')
   } catch (e) {
     console.error(e)
   }
