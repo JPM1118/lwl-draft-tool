@@ -14,11 +14,12 @@ module.exports = (players, type) => {
         return (espnFilter.includes(entry[0]) || (entry[0].includes('FSI') && entry[1] !== zero))
       })
       .map(entry => {
-        return { [entry[0]]: entry[1] }
+        const value = parseFloat(entry[1]) ? parseFloat(entry[1]) : entry[1];
+        return { [entry[0]]: value }
       })
       .forEach(entry => Object.assign(playerObj, entry))
 
     newArray.push(playerObj)
   }
-  return JSON.stringify(newArray)
+  return newArray
 }

@@ -3,7 +3,7 @@ import draftToolStyles from './draftTool.module.scss';
 
 import DraftToolHeader from '../../components/draftToolHeader/draftToolHeader';
 import MyTeam from '../../components/myTeam/myTeam';
-
+import AvailablePlayers from '../../components/availablePlayers/availablePlayers';
 
 const DraftTool = () => {
   const source = new EventSource('http://localhost:3000/stream', { withCredentials: true })
@@ -11,7 +11,7 @@ const DraftTool = () => {
   const [isSkaters, setIsSkaters] = useState(true)
   const [myTeam, setMyTeam] = useState(null)
   const [takenPlayers, setTakenPlayers] = useState(null)
-  const [availablePlayers, setAvailablePlayers] = useState(null)
+  const [availablePlayers, setAvailablePlayers] = useState({})
 
   const fetchPlayerList = async () => {
     if (myTeam === null) {
@@ -22,11 +22,11 @@ const DraftTool = () => {
       })
       response = await response.json()
       // const data = response.body.data
-      setMyTeam(response)
+      setAvailablePlayers(response)
     }
   }
   useEffect(() => {
-    // fetchPlayerList()
+    fetchPlayerList()
     source.addEventListener('myTeamUpdate', e =>
       console.log(e.data)
     )
@@ -39,16 +39,20 @@ const DraftTool = () => {
     )
     // setMyTeam(data.myTeam)
   }, [])
-
   return (
     <div className={draftToolStyles.container}>
       <div className={draftToolStyles.header}>
-        <DraftToolHeader isSkaters={isSkaters} setIsSkaters={setIsSkaters} />
+        <DraftToolHeader
+          isSkaters={isSkaters}
+          setIsSkaters={setIsSkaters}
+        />
       </div>
       <div className={draftToolStyles.myTeam}>
         <MyTeam myTeam={myTeam} />
       </div>
-      <div className={draftToolStyles.availablePlayers}></div>
+      <div className={draftToolStyles.availablePlayers}>
+        <AvailablePlayers players={availablePlayers && isSkaters ? availablePlayers.skaters : availablePlayers.goalies} />
+      </div>
     </div>
   )
 }

@@ -19,7 +19,7 @@ function myTeam(props) {
           <span>Team</span>
           <span>Rank</span>
         </div>
-        {myTeam && myTeam.map(player => {
+        {/* {myTeam && myTeam.map(player => {
           return (
             <li>
               <span className={myTeamStyles.name}>{player.name}</span>
@@ -28,7 +28,7 @@ function myTeam(props) {
               <span className={myTeamStyles.rank}>{player.rank}</span>
             </li>
           )
-        })}
+        })} */}
       </div>
     </div>
   )

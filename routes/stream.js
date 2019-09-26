@@ -8,7 +8,12 @@ streamRouter.get('/', (req, res, next) => {
     res.write("event: takenUpdate\n")
     res.write("data: " + JSON.stringify(players) + "\n\n");
   })
+  Update.on('sendMyPlayers', function (players) {
+    res.write("event: myTeamUpdate\n")
+    res.write("data: " + JSON.stringify(players) + "\n\n");
+  })
   res.sseSendTest('Hello World!')
+
 })
 
 module.exports = streamRouter;
