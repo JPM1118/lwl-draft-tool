@@ -15,13 +15,13 @@ chrome.runtime.onInstalled.addListener(function () {
 
 const sendNewPlayers = (data) => {
   let jsonData = JSON.stringify(data)
-  console.log(jsonData)
   return fetch('http://localhost:3000/players/refreshPlayerList', {
     method: 'POST',
     mode: 'cors',
     credentials: 'include',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      "Cache-Control": "no-store"
     },
     body: jsonData
   })
@@ -31,8 +31,6 @@ const sendNewPlayers = (data) => {
 
 chrome.runtime.onMessage.addListener(
   function (request, sender, sendResponse) {
-    console.log(request)
-
     if (request.data) {
       sendNewPlayers(request)
     }

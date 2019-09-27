@@ -4,10 +4,19 @@ const Schema = mongoose.Schema
 const userSchema = new Schema({
     fbId: String,
     googleId: String,
-    skaters: Array,
-    goalies: Array,
-    takenPlayers: Array,
-    myPlayers: Array
+    players: {
+        skaters: Array,
+        goalies: Array
+    },
+    takenPlayers: {
+        skaters: Array,
+        goalies: Array
+    },
+    myPlayers: {
+        skaters: Array,
+        goalies: Array
+    },
+    draftPick: Number
 })
 
 userSchema.static('findOrCreate', async function (provider, profile) {

@@ -6,12 +6,12 @@ draftKitRouter.post('/', async (req, res, next) => {
     console.log("received")
     const { type } = req.body.data;
     const { playerData } = req.body.data;
-    const user = await User.findById('5d8abd87179c4644506f1331')
+    const user = await User.findById('5d8e3b3905fe453220af7f67')
     if (type === 'skaters') {
-      user.skaters.push(...playerData)
+      user.players.skaters.push(...playerData)
       await user.save()
     } else {
-      user.goalies.push(...playerData);
+      user.players.goalies.push(...playerData);
       await user.save()
     }
     res.status(200).send('updated.')

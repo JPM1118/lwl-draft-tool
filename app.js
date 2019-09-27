@@ -1,16 +1,16 @@
 const express = require('express');
 const session = require('express-session');
 const passport = require('passport');
-const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
 const app = express();
+const server = require('http').Server(app)
+const io = require('socket.io')(server)
 const MongoStore = require('connect-mongo')(session);
 require('./config/passport');
 
 //custom middleware
-const sse = require('./middleware/sse');
 
 mongoose.connect(
   `mongodb+srv://${process.env.MONGO_UN}:${process.env.MONGO_PW}@cluster0-y5hkl.mongodb.net/lwl-draft-tool?retryWrites=true`,
@@ -34,7 +34,19 @@ app.use(
 app.use(express.json({ limit: '50mb' }))
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(sse);
+app.io = io;
 require('./routes')(app);
+// io.on('connection', function (socket) {
+//   let count = 0;
+//   const Update = require('./utilities/UpdateNotifier');
+//   Update.on('sendTakenPlayers', function (players) {
+//     socket.emit('sendTakenPlayers', players)
+//     count = count++
+//   })
+//   Update.on('sendMyPlayers', function (players) {
+//     socket.emit('sendMyPlayers', players)
+//     count = count++
+//   })
+// })
 
-app.listen(3000, () => console.log('connected to port 3000'))
+server.listen(3000, () => console.log('connected to port 3000'))

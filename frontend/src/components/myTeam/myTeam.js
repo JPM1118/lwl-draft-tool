@@ -1,37 +1,42 @@
 import React from 'react';
 import ReactTable from 'react-table';
+import 'react-table/react-table.css'
 
 import myTeamStyles from './myTeam.module.scss';
 
-function myTeam(props) {
-  const { myTeam } = props;
-  const columns = [{
-    Header: ''
-  }]
-
+function MyTeam(props) {
+  const { myTeam } = props
+  let columns;
+  if (myTeam) {
+    columns = [
+      {
+        Header: 'PLAYER',
+        accessor: myTeam.PLAYER
+      },
+      {
+        Header: 'Pos',
+        accessor: myTeam.EPOS
+      },
+      {
+        Header: 'TEAM',
+        accessor: myTeam.TEAM
+      },
+      {
+        Header: 'RANK',
+        accessor: myTeam.LWLRANK
+      }
+    ]
+  }
   return (
     <div className={myTeamStyles.containers}>
       <h2 className={myTeamStyles.title}>My Team</h2>
-      <div className={myTeamStyles.playerList}>
-        <div className={myTeamStyles.header}>
-          <span>Name</span>
-          <span>Pos</span>
-          <span>Team</span>
-          <span>Rank</span>
-        </div>
-        {/* {myTeam && myTeam.map(player => {
-          return (
-            <li>
-              <span className={myTeamStyles.name}>{player.name}</span>
-              <span className={myTeamStyles.positon}>{player.pos}</span>
-              <span className={myTeamStyles.team}>{player.team}</span>
-              <span className={myTeamStyles.rank}>{player.rank}</span>
-            </li>
-          )
-        })} */}
-      </div>
+      {myTeam && <ReactTable
+        data={myTeam}
+        columns={columns}
+        defaultPageSize={15}
+      />}
     </div>
   )
 }
 
-export default myTeam
+export default MyTeam

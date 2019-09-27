@@ -9,6 +9,7 @@ const Header = (props) => {
   const toggleShowInfo = () => {
     setShowInfo(!showInfo)
   }
+
   return (
     <div className={headerStyles.content}>
       <h1 className={headerStyles.title}>LWL DRAFT TOOL</h1>

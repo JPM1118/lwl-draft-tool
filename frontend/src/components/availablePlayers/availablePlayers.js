@@ -3,10 +3,19 @@ import availableStyles from './availablePlayers.module.scss';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css'
 
-function availablePlayers(props) {
-  const { players } = props;
-  let columns;
-  if (props.players) {
+function AvailablePlayers(props) {
+  const { players, takenPlayers } = props;
+  let columns, availablePlayers;
+  if (players) {
+    if (takenPlayers.length > 0) {
+      availablePlayers = players.filter(player => {
+        return !takenPlayers.some(tPlayer => {
+          return player.PLAYER == tPlayer.PLAYER
+        })
+      })
+    } else {
+      availablePlayers = [...players]
+    }
     const objKeys = Object.keys(players[0])
     columns = objKeys.map(key => {
       return {
@@ -19,7 +28,7 @@ function availablePlayers(props) {
     <div className={availableStyles.container}>
       <h2 className={availableStyles.title}>Available Players</h2>
       {players && <ReactTable
-        data={players}
+        data={availablePlayers}
         columns={columns}
         defaultPageSize={15}
       />
@@ -28,4 +37,4 @@ function availablePlayers(props) {
   )
 }
 
-export default availablePlayers
+export default AvailablePlayers
