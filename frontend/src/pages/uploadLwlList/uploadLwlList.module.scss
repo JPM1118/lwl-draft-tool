@@ -1,0 +1,46 @@
+@import '../../variables.scss';
+
+.container{
+  margin: 5rem auto 0 auto ;
+  max-width: 500px;
+
+}
+
+.title{
+  text-align: center;
+  color: $darkGreen;
+}
+
+.dropBox{
+  margin: 3rem auto;
+  span{
+    display: inline-block;
+    margin-top: 1rem;
+    margin-left: 1rem;
+  }
+}
+
+.remove{
+  margin-left: .35rem;
+  cursor: pointer;
+}
+
+.submit {
+  composes: btn from '../../global.scss';
+  background-color: $darkGreen;
+  color: white;
+  border: 1px solid $darkGreen;
+  &:hover{
+    background-color: white;
+    color: $darkGreen;
+    border: 1px solid $darkGreen;
+  }
+}
+
+.submitDisabled {
+  composes: btn from '../../global.scss';
+  background-color: whitesmoke;
+  color: white;
+  border: 1px solid whitesmoke;
+  cursor: not-allowed;
+}

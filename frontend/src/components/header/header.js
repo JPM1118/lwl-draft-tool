@@ -32,7 +32,7 @@ const Header = (props) => {
           <li style={{ marginBottom: '1rem' }}>Your Team's total FSI will be listed.</li>
           <li style={{ marginBottom: '1rem' }}>Each available player's ADP and FSI will be listed.</li>
           <li style={{ marginBottom: '1rem' }}>Use the appropriately marked buttons to navigate between goalies and skaters.</li>
-          <li style={{ marginBottom: '1rem' }}>Use the search bar to look for a specific player still available in draft.</li>
+          <li style={{ marginBottom: '1rem' }}>In top right hand corner, fill in your draft position and number of teams in your league.</li>
         </ul>
       </Modal>}
     </div>

@@ -1,3 +1,5 @@
+
+//Only show chrome extension icon when on 'clickydraft' domain
 chrome.runtime.onInstalled.addListener(function () {
   chrome.declarativeContent.onPageChanged.removeRules(undefined, function () {
     chrome.declarativeContent.onPageChanged.addRules([
@@ -13,6 +15,7 @@ chrome.runtime.onInstalled.addListener(function () {
   });
 });
 
+//send draft information to backend
 const sendNewPlayers = (data) => {
   let jsonData = JSON.stringify(data)
   return fetch('http://localhost:3000/players/refreshPlayerList', {
@@ -25,7 +28,6 @@ const sendNewPlayers = (data) => {
     },
     body: jsonData
   })
-    .then(res => console.log(res))
     .catch(e => console.error(e))
 }
 

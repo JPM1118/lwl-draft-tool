@@ -8,6 +8,11 @@ $googleRed: #db3236;
   max-width: 1000px;
   margin: 0 auto;
   text-align: center;
+  color: $darkGreen;
+  hr{
+    border: 1px solid $darkGreen;
+    margin: 5rem auto;
+  }
 }
 
 .facebookBtn{
@@ -28,5 +33,23 @@ $googleRed: #db3236;
   background-color: $googleRed;
   &:hover{
     color: $googleRed;
+  }
+}
+.siteDescription{
+  max-width: 700px;
+  margin: 5rem auto 0 auto;
+  background-color: $mediumGreen;
+  padding: 3rem;
+  border-radius: 5px;
+  h2{
+    color: white;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+  }
+  p{
+    color: white;
+    text-align: left;
+    line-height: 1.5rem;
+    font-weight: 500;
   }
 }

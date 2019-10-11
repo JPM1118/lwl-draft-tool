@@ -8,7 +8,7 @@ const DetectExtension = () => {
       </p>
       <ul>
         <li>Make sure you have the Chrome extension installed.</li>
-        <li>Make sure you have joined your league's active draft room.</li>
+        <li>Make sure you have joined your clickydraft.com active draft room.</li>
       </ul>
       <p>
         After you have double checked above, Refresh this page.

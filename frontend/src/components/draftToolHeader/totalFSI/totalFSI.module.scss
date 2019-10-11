@@ -13,5 +13,14 @@
 }
 
 .table{
-
+  margin: 1rem auto;
+  th{
+    font-weight: 500;
+    padding: .5rem;
+    border-bottom: 2px solid $mediumGreen;
+  }
+  td{
+    padding: .5rem;
+    font-style: italic;
+  }
 }

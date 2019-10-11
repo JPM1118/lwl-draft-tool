@@ -3,5 +3,5 @@ module.exports = (app) => {
   app.use('/players', require('./players'))
   app.use('/auth', require('./auth'))
   app.use('/reset', require('./resetDraft'))
-  app.use('/draftPick', require('./draftPick'))
+  app.use('/draftInfo', require('./draftInfo'))
 };

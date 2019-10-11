@@ -16,7 +16,10 @@ const userSchema = new Schema({
         skaters: Array,
         goalies: Array
     },
-    draftPick: Number
+    draftInfo: {
+        myPick: Number,
+        totalTeams: Number
+    }
 })
 
 userSchema.static('findOrCreate', async function (provider, profile) {

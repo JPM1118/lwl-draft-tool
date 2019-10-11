@@ -1,5 +1,8 @@
-module.exports = (draftPosition) => {
-  const NumberOfTeams = 10;
+module.exports = async (userId) => {
+  const User = require('../models/User')
+  const user = await User.findById(userId)
+  const NumberOfTeams = user.draftInfo.totalTeams;
+  const draftPosition = user.draftInfo.myPick
   const picks = [];
 
   for (let round = 1; round <= 22; round++) {

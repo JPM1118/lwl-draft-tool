@@ -1,30 +1,29 @@
 /* eslint-disable no-undef */
 window.addEventListener("load", function (event) {
-  console.log('Hi world!')
+  //if this node changes, then callback fires
   const targetNode = document.querySelector('div.pick > div.playerFName');
 
   //mutation observer
   const config = { attributes: true, childList: true, subtree: true };
   const callback = () => {
+    //selectors for relevant player and draft information
     const firstName = document.querySelector('div.pick > div.playerFName').textContent;
     const lastName = document.querySelector('div.pick > div.playerLName').textContent;
     const position = document.querySelector('div.pick > div.playerPos').textContent;
     const draftingPickString = document.querySelector('#draftBoardHdrInfoContainer > div.draftBoardHdrActive > div.currentPickContainer.infoContainer > div.currentPickHeader.infoHeader > div > span.currentPickNumLabel').textContent;
-    draftingPickInt = parseInt(draftingPickString.replace('Pick: ', ''))
+    const draftingPickInt = parseInt(draftingPickString.replace('Pick: ', '')) - 1
+    const totalPlayersDrafted = Array.from(document.querySelectorAll('.playerPicked')).length
 
-    console.log(firstName, lastName, draftingPickInt)
-
-    if (lastName !== 'None') {
-      chrome.runtime.sendMessage(
-        {
-          "data": {
-            "pick": draftingPickInt,
-            "isSkater": position === 'G' ? false : true,
-            "name": `${firstName} ${lastName}`
-          }
+    chrome.runtime.sendMessage(
+      {
+        "data": {
+          "pick": draftingPickInt,
+          "position": position === 'G' ? 'goalies' : 'skaters',
+          "name": `${firstName} ${lastName}`,
+          "totalPlayersDrafted": totalPlayersDrafted
         }
-      )
-    }
+      }
+    )
   }
 
 

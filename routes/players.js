@@ -1,11 +1,22 @@
 const playerRouter = require('express').Router()
 const User = require('../models/User');
-const draftKitFilter = require('../utilities/draftKitFilter')
 const myPicks = require('../utilities/myPicks');
 
+//send player info for initial frontend render
 playerRouter.get('/getPlayerList', async (req, res, next) => {
   try {
     const user = await User.findById(req.user.userId)
+
+    user.players.skaters.forEach(player => {
+      if (player.EADP === 0) {
+        player.EADP = '-'
+      }
+    })
+    user.players.goalies.forEach(player => {
+      if (player.EADP === 0) {
+        player.EADP = '-'
+      }
+    })
 
     res.status(200).json({
       "players": user.players,
@@ -21,39 +32,80 @@ playerRouter.get('/getPlayerList', async (req, res, next) => {
 playerRouter.post('/refreshPlayerList', async (req, res, next) => {
   try {
     const user = await User.findById(req.user.userId);
-    const { name } = req.body.data;
-    const myPick = parseInt(user.draftPick)
-    const pos = req.body.data.isSkater ? 'skaters' : 'goalies';
-    const newPlayer = user.players[pos].find(el => el.PLAYER === name)
-    const pickArray = myPicks(myPick)
-    const isMine = pickArray.some(pick => req.body.data.pick === pick + 1)
-    if (isMine) {
-      const myTeam = user.myPlayers[pos];
-      let newMyTeam;
-      if (myTeam.length !== 0 && myTeam.some(e => e.PLAYER === name)) {
-        newMyTeam = myTeam.filter((e, i) => i !== myTeam.length - 1)
-      } else {
 
-        newMyTeam = [...myTeam, newPlayer];
-      }
-      // req.app.io.emit("sendMyPlayers", { data: draftKitFilter(newMyTeam, pos), position: pos })
-      user.myPlayers[pos] = newMyTeam;
-      await user.save()
-    } else {
-      const takenPlayers = user.takenPlayers[pos];
-      let newTakenPlayers;
-      if (takenPlayers.some(e => e.PLAYER === name)) {
-        newTakenPlayers = takenPlayers.filter((e, i) => i !== takenPlayers.length - 1)
-      } else {
+    const { name, totalPlayersDrafted, pick, position } = req.body.data;
 
-        newTakenPlayers = [...takenPlayers, newPlayer];
-      }
-      // req.app.io.emit('sendTakenPlayers', { data: draftKitFilter(newTakenPlayers, pos), position: pos })
-      user.takenPlayers[pos] = newTakenPlayers;
-      await user.save()
+    let newPlayer = user.players[position].find(player => player.PLAYER === name)
+    const pickArray = await myPicks(req.user.userId);
+    const newPickIsMine = pickArray.some(myPick => myPick === pick);
+    const totalPlayersSaved = (user.takenPlayers.skaters.length) + (user.takenPlayers.goalies.length)
+
+    //check if draft page was reloaded
+    if (totalPlayersDrafted === totalPlayersSaved) {
+      return res.status(200).json({ msg: 'page reloaded' })
     }
-    return res.status(200).send('got it.');
+
+    //check if draft is ahead of database due to unforseen error
+
+
+    //check if name of drafted player is in 'player' array. If not, check last name only
+    if (newPlayer === undefined) {
+      const lastName = name.substring(name.indexOf(' '));
+      newPlayer = user.players[position].find(savedPlayer => {
+        const savedPlayerLastName = savedPlayer.PLAYER.substring(savedPlayer.PLAYER.indexOf(' '));
+        return savedPlayerLastName === lastName
+      })
+    }
+
+
+    const takenPlayers = user.takenPlayers[position];
+    let newTakenPlayers;
+
+    const myTeam = user.myPlayers[position];
+    let newMyTeam;
+
+    //check if the last draft pick was undone. If so, delete player.
+    if (totalPlayersDrafted < totalPlayersSaved) {
+      user.takenPlayers.skaters = user.takenPlayers.skaters.filter(skater => {
+        return skater.picked !== pick + 1
+      })
+      user.takenPlayers.goalies = user.takenPlayers.goalies.filter(goalie => {
+        return goalie.picked !== pick + 1
+      })
+      req.app.io.emit('sendTakenPlayers', { data: user.takenPlayers })
+      //check if undone draft pick was user pick
+      if (pickArray.some(myPick => myPick - pick === 1)) {
+        user.myPlayers.skaters = user.myPlayers.skaters.filter(skater => {
+          return skater.picked !== pick + 1
+        })
+        user.myPlayers.goalies = user.myPlayers.goalies.filter(goalie => {
+          return goalie.picked !== pick + 1
+        })
+        req.app.io.emit("sendMyPlayers", { data: user.myPlayers })
+      }
+    } else {
+      //else add new player to database and send to frontend
+
+      newPlayer = { ...newPlayer, picked: pick }
+      newTakenPlayers = [...takenPlayers, newPlayer];
+      if (newPickIsMine) {
+        newMyTeam = [...myTeam, newPlayer];
+        if (newMyTeam) {
+          user.myPlayers[position] = newMyTeam;
+        }
+        req.app.io.emit("sendMyPlayers", { data: user.myPlayers })
+      }
+
+      if (newTakenPlayers) {
+        user.takenPlayers[position] = newTakenPlayers;
+      }
+      req.app.io.emit('sendTakenPlayers', { data: user.takenPlayers })
+    }
+
+    await user.save()
+    return res.status(200).json({ msg: 'got it' });
   } catch (e) {
+    res.status(500).json({ error: 'Something went wrong.' })
     console.error(e)
   }
 })

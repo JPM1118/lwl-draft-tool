@@ -1,19 +1,18 @@
 const draftKitRouter = require('express').Router()
+const _parseFloat = require('../utilities/_parseFloat');
 const User = require('../models/User');
 
 draftKitRouter.post('/', async (req, res, next) => {
   try {
-    console.log("received")
-    const { type } = req.body.data;
-    const { playerData } = req.body.data;
-    const user = await User.findById('5d8e3b3905fe453220af7f67')
-    if (type === 'skaters') {
-      user.players.skaters.push(...playerData)
-      await user.save()
-    } else {
-      user.players.goalies.push(...playerData);
-      await user.save()
-    }
+    const { skaters } = req.body
+    const { goalies } = req.body
+
+    const user = await User.findById(req.user.userId)
+    user.players.skaters = _parseFloat(skaters)
+    user.players.goalies = _parseFloat(goalies)
+    const newUser = await user.save()
+    //populate frontend with new players
+    req.app.io.emit("sendPlayers", newUser.players)
     res.status(200).send('updated.')
   } catch (e) {
     console.error(e)

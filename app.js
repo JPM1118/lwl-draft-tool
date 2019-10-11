@@ -10,7 +10,6 @@ const io = require('socket.io')(server)
 const MongoStore = require('connect-mongo')(session);
 require('./config/passport');
 
-//custom middleware
 
 mongoose.connect(
   `mongodb+srv://${process.env.MONGO_UN}:${process.env.MONGO_PW}@cluster0-y5hkl.mongodb.net/lwl-draft-tool?retryWrites=true`,
@@ -36,17 +35,5 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.io = io;
 require('./routes')(app);
-// io.on('connection', function (socket) {
-//   let count = 0;
-//   const Update = require('./utilities/UpdateNotifier');
-//   Update.on('sendTakenPlayers', function (players) {
-//     socket.emit('sendTakenPlayers', players)
-//     count = count++
-//   })
-//   Update.on('sendMyPlayers', function (players) {
-//     socket.emit('sendMyPlayers', players)
-//     count = count++
-//   })
-// })
 
 server.listen(3000, () => console.log('connected to port 3000'))

@@ -27,7 +27,6 @@ const App = () => {
     setIsLoading(false)
   }
   const logoutRequest = async () => {
-    console.log('clicked')
     let response = await fetch('http://localhost:3000/auth/logout', {
       method: 'GET',
       mode: 'cors',

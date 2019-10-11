@@ -1,42 +1,49 @@
 import React from 'react';
-import ReactTable from 'react-table';
-import 'react-table/react-table.css'
-
+import Paper from '@material-ui/core/Paper'
+import { SortingState, IntegratedSorting } from '@devexpress/dx-react-grid';
+import { Grid, Table, TableHeaderRow } from '@devexpress/dx-react-grid-material-ui'
 import myTeamStyles from './myTeam.module.scss';
 
-function MyTeam(props) {
-  const { myTeam } = props
-  let columns;
-  if (myTeam) {
-    columns = [
-      {
-        Header: 'PLAYER',
-        accessor: myTeam.PLAYER
-      },
-      {
-        Header: 'Pos',
-        accessor: myTeam.EPOS
-      },
-      {
-        Header: 'TEAM',
-        accessor: myTeam.TEAM
-      },
-      {
-        Header: 'RANK',
-        accessor: myTeam.LWLRANK
-      }
-    ]
-  }
+const myTeam = (props) => {
+  const columns = [
+    {
+      title: 'PLAYER',
+      name: 'PLAYER'
+    },
+    {
+      title: 'POS',
+      name: 'EPOS'
+    },
+    {
+      title: 'TEAM',
+      name: 'TEAM'
+    },
+    {
+      title: 'RANK',
+      name: 'LWLRANK'
+    }
+  ]
+  const rows = props.myPlayers
   return (
-    <div className={myTeamStyles.containers}>
+    <div className={myTeamStyles.container}>
+      <span className={myTeamStyles.exit} onClick={props.close}>X</span>
       <h2 className={myTeamStyles.title}>My Team</h2>
-      {myTeam && <ReactTable
-        data={myTeam}
-        columns={columns}
-        defaultPageSize={15}
-      />}
+      {rows && <Paper>
+        <Grid
+          rows={rows}
+          columns={columns}
+        >
+          <SortingState
+            defaultSorting={[{ columnName: 'EPOS', direction: 'asc' }]}
+          />
+          <IntegratedSorting />
+          <Table />
+          <TableHeaderRow showSortingControls />
+        </Grid>
+      </Paper>}
     </div>
   )
 }
 
-export default MyTeam
+export default myTeam
+

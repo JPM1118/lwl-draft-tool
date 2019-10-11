@@ -30,8 +30,7 @@
         "*://*.clickydraft.com/*"
       ],
       "js": [
-        "clicky.js",
-        "test.js"
+        "clicky.js"
       ]
     }
   ],

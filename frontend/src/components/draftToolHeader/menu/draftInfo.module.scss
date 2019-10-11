@@ -1,0 +1,78 @@
+@import '../../../variables.scss';
+
+.container {
+  position: absolute;
+  top: 1rem;
+  right: 2rem;
+  width: 105px;
+  
+}
+.upload{
+  text-align: center;  
+  padding: 3px;
+  label{
+    display: block;
+    font-size: .8rem;
+    color: $darkGreen;
+    font-weight: bold;
+    text-decoration: underline;
+    margin-bottom: .25rem;
+  }
+}
+.inputField{
+  display: inline-block;
+  width: 2.1rem;
+  margin-bottom: .3rem;
+}
+.submit{
+  display: block;
+  composes: btn from '../../../global.scss';  
+  margin: 0 auto;
+  color: white;
+  background-color: $mediumGreen;
+}
+
+.currentInfo{
+  text-align: center;  
+  padding: 3px;
+  border: 1px solid $darkGreen;
+}
+.label{
+  font-size: .8rem;
+    color: $darkGreen;
+    font-weight: bold;
+    text-decoration: underline;
+    margin-bottom: .25rem;
+}
+.data{
+  display: inline-block;
+  vertical-align: middle;
+  height: 1.1rem;
+  border: 1px solid $darkGreen;
+  width: 1.5rem;
+  margin: .2rem auto;
+  font-size: .8rem;
+}
+.edit{
+  display: block;
+  margin: .3rem auto;
+  cursor: pointer;
+}
+.reset{
+  composes: btn from '../../../global.scss';
+  margin: .5rem auto 0 auto;
+  display: block;
+  color: white;
+  background-color: red;
+}
+
+.childP{
+  text-align: center;
+}
+.childBtn{
+  composes: btn from '../../../global.scss';
+  background-color: green;
+  color: white;
+  text-align: right;
+  border: none;
+}
