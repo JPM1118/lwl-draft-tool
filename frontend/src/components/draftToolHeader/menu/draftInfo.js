@@ -9,7 +9,7 @@ const DraftInfo = () => {
   const [resetClick, setResetClick] = useState(false)
   const [editClick, setEditClick] = useState(false)
   const requestDraftInfo = async () => {
-    const response = await fetch('http://localhost:3000/draftInfo', {
+    const response = await fetch('https://api.lwldrafttool.com/draftInfo', {
       method: 'GET',
       mode: 'cors',
       credentials: 'include'
@@ -27,7 +27,7 @@ const DraftInfo = () => {
     }
   }, [myPick])
   const handleClick = () => {
-    return fetch('http://localhost:3000/reset',
+    return fetch('https://api.lwldrafttool.com/reset',
       {
         method: 'GET',
         mode: 'cors',
@@ -41,7 +41,7 @@ const DraftInfo = () => {
   }
   const handleSubmit = async (e) => {
     e.preventDefault()
-    await fetch('http://localhost:3000/draftInfo',
+    await fetch('https://api.lwldrafttool.com/draftInfo',
       {
         method: 'POST',
         mode: 'cors',

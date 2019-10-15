@@ -17,12 +17,12 @@ function Login() {
       </div>
       <hr />
       <h2>Login</h2>
-      <a href="http://localhost:3000/auth/facebook">
+      <a href="https://api.lwldrafttool.com/auth/facebook">
         <button className={loginStyles.facebookBtn}>FACEBOOK LOGIN</button>
       </a>
       <br />
       <div style={{ margin: '1rem auto' }}>Or</div>
-      <a href="http://localhost:3000/auth/google">
+      <a href="https://api.lwldrafttool.com/auth/google">
         <button className={loginStyles.googleBtn}>GOOGLE LOGIN</button>
       </a>
 

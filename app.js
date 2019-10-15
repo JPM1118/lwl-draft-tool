@@ -17,8 +17,11 @@ mongoose.connect(
 )
   .then(console.log('MongoDB connected'))
   .catch(e => console.error(e))
-
-app.use(cors({ origin: ['https://lvh.me', 'http://localhost:3100', 'http://localhost:5000', 'chrome-extension://mcodgdbeipnacaefflopimhekfcpclbc'], credentials: true }));
+if (process.env.NODE_ENV === 'production') {
+  app.use(cors({ credentials: true }));
+} else {
+  app.use(cors({ origin: ['https://lvh.me', 'http://localhost:3100', 'http://localhost:5000', 'chrome-extension://mcodgdbeipnacaefflopimhekfcpclbc'], credentials: true }));
+}
 app.use(
   session({
     maxAge: 1000 * 60 * 60 * 24 * 7 * 52, // 1 year

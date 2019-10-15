@@ -9,7 +9,7 @@ import UploadLwlList from '../uploadLwlList/uploadLwlList';
 import Spinner from '../../components/Spinner/Spinner';
 
 const DraftTool = () => {
-  const socket = socketIOClient('http://localhost:3000');
+  const socket = socketIOClient('https://api.lwldrafttool.com');
   const [isLoading, setIsLoading] = useState(true)
   const [isSkaters, setIsSkaters] = useState(true)
   const [players, setPlayers] = useState({ skaters: [], goalies: [] })
@@ -18,7 +18,7 @@ const DraftTool = () => {
   const [showMyPlayers, setShowMyPlayers] = useState(false)
 
   const fetchPlayerList = async () => {
-    let response = await fetch('http://localhost:3000/players/getPlayerList', {
+    let response = await fetch('https://api.lwldrafttool.com/players/getPlayerList', {
       method: 'GET',
       mode: 'cors',
       credentials: 'include'

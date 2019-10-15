@@ -1,7 +1,7 @@
 {
   "name": "LWL Draft Tool",
   "version": "1.0",
-  "description": "Update a database full of NHL player information to reflect who has been taken in a fantasy draft.",
+  "description": "LWL Draft Tool extension that gathers draft information from a 'clickdraft.com' in-person live draft.",
   "permissions": [
     "tabs",
     "storage",

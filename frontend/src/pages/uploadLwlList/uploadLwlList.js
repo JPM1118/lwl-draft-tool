@@ -67,7 +67,7 @@ function UploadLwlList() {
       goalies: parsedgoalieCsv
     })
 
-    return fetch('http://localhost:3000/addDraftKit', {
+    return fetch('https://api.lwldrafttool.com/addDraftKit', {
       method: 'POST',
       mode: 'cors',
       credentials: 'include',

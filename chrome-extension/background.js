@@ -18,7 +18,7 @@ chrome.runtime.onInstalled.addListener(function () {
 //send draft information to backend
 const sendNewPlayers = (data) => {
   let jsonData = JSON.stringify(data)
-  return fetch('http://localhost:3000/players/refreshPlayerList', {
+  return fetch('https:api.lwldrafttool.com/players/refreshPlayerList', {
     method: 'POST',
     mode: 'cors',
     credentials: 'include',

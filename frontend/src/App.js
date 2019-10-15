@@ -13,7 +13,7 @@ const App = () => {
 
   const loggedInRequest = async () => {
     setIsLoading(true)
-    let response = await fetch('http://localhost:3000/auth/loggedIn', {
+    let response = await fetch('https://api.lwldrafttool.com/auth/loggedIn', {
       method: 'GET',
       mode: 'cors',
       credentials: 'include'
@@ -27,7 +27,7 @@ const App = () => {
     setIsLoading(false)
   }
   const logoutRequest = async () => {
-    let response = await fetch('http://localhost:3000/auth/logout', {
+    let response = await fetch('https://api.lwldrafttool.com/auth/logout', {
       method: 'GET',
       mode: 'cors',
       credentials: 'include'
