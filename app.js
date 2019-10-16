@@ -37,6 +37,5 @@ app.use(express.json({ limit: '50mb' }))
 app.use(passport.initialize());
 app.use(passport.session());
 app.io = io;
-require('./routes')(app);
-
+app.use('/', require('./routes/index'))
 server.listen(3000, () => console.log('connected to port 3000'))
