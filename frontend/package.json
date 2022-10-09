@@ -24,7 +24,7 @@
     "socket.io-client": "^2.3.0",
     "sql-template-strings": "^2.2.2",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.2",
-    "xlsx": "^0.15.1"
+    "xlsx": "^0.17.0"
   },
   "scripts": {
     "start": "craco start",
