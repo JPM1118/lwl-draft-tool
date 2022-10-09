@@ -1,0 +1,15 @@
+get http://localhost:3001/players/skaters
+###
+get http://localhost:3001/players/goalies
+###
+post http://localhost:3001/players/refreshplayerlist
+content-type: application/json
+
+{
+      "name": "Testy McTest",
+      "team": "CHI",
+      "position": "C",
+      "pick": 1
+    }
+
+

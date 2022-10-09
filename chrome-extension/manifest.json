@@ -11,9 +11,7 @@
   ],
   "commands": {},
   "background": {
-    "scripts": [
-      "background.js"
-    ],
+    "scripts": ["background.js"],
     "persistent": false
   },
   "page_action": {
@@ -26,12 +24,12 @@
   },
   "content_scripts": [
     {
-      "matches": [
-        "*://*.clickydraft.com/*"
-      ],
-      "js": [
-        "clicky.js"
-      ]
+      "matches": ["*://*.clickydraft.com/*"],
+      "js": ["clicky.js"]
+    },
+    {
+      "matches": ["*://*.fantasy.espn.com/hockey/*"],
+      "js": ["espn.js"]
     }
   ],
   "icons": {
@@ -40,8 +38,6 @@
     "48": "images/stick48.png",
     "128": "images/stick128.png"
   },
-  "web_accessible_resources": [
-    "images/*"
-  ],
+  "web_accessible_resources": ["images/*"],
   "manifest_version": 2
 }
