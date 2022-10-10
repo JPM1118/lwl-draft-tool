@@ -9,11 +9,12 @@ import LoadingIcon from "./elements/LoadingIcon";
 import { filterAvailablePlayers } from "./helpers";
 
 function App() {
-  const [draftedPlayers, setDraftedPlayers] = React.useState([]);
+  const [takenPlayers, setTakenPlayers] = React.useState([]);
   const [availableSkaters, setAvailableSkaters] = React.useState(null);
   const [availableGoalies, setAvailableGoalies] = React.useState(null);
+  const [myPlayers, setMyPlayers] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(false);
-  const socket = io("http://localhost:3001", {
+  const socket = io("http://localhost:8080", {
     reconnectionDelay: 1000,
     reconnection: true,
     reconnectionAttemps: 10,
@@ -23,9 +24,27 @@ function App() {
     rejectUnauthorized: false,
   });
 
-  const debounceDrafted = React.useCallback(
+  const debounceTakenPlayers = React.useCallback(
     debounce((value) => {
-      setDraftedPlayers(value);
+      setTakenPlayers(value);
+    }, 2000),
+    []
+  );
+  const debounceAvailableSkaters = React.useCallback(
+    debounce((value) => {
+      setAvailableSkaters(value);
+    }, 2000),
+    []
+  );
+  const debounceAvailableGoalies = React.useCallback(
+    debounce((value) => {
+      setAvailableGoalies(value);
+    }, 2000),
+    []
+  );
+  const debounceMyPlayers = React.useCallback(
+    debounce((value) => {
+      setMyPlayers(value);
     }, 2000),
     []
   );
@@ -34,34 +53,67 @@ function App() {
     (async () => {
       setIsLoading(true);
       let skaterResponse = await fetch(
-        "http://localhost:3001/players/skaters",
+        "http://localhost:8080/players/skaters",
         {
           method: "GET",
         }
       );
       skaterResponse = await skaterResponse.json();
       let goalieResponse = await fetch(
-        "http://localhost:3001/players/goalies",
+        "http://localhost:8080/players/goalies",
         {
           method: "GET",
         }
       );
       goalieResponse = await goalieResponse.json();
+      let takenPlayersResponse = await fetch(
+        "http://localhost:8080/players/takenplayers",
+        {
+          method: "GET",
+        }
+      );
+      takenPlayersResponse = await takenPlayersResponse.json();
+      let myPlayersResponse = await fetch(
+        "http://localhost:8080/players/myplayers",
+        {
+          method: "GET",
+        }
+      );
+      myPlayersResponse = await myPlayersResponse.json();
       setAvailableSkaters(skaterResponse);
       setAvailableGoalies(goalieResponse);
+      setTakenPlayers(takenPlayersResponse);
+      setMyPlayers(myPlayersResponse);
       setIsLoading(false);
     })();
   }, []);
   React.useEffect(() => {
-    socket.on("sendTakenPlayers", (data) => {
-      debounceDrafted(data.data.data);
-      console.log("debounced");
+    socket.on("sendTakenPlayers", (response) => {
+      setTakenPlayers(response.data);
+    });
+    socket.on("sendAvailableSkaters", (response) => {
+      // debounceAvailableSkaters(response.data);
+      setAvailableSkaters(response.data);
+      // console.log('debounced');
+    });
+    socket.on("sendAvailableGoalies", (response) => {
+      // debounceAvailableGoalies(response.data);
+      setAvailableGoalies(response.data);
+      // console.log('debounced');
+    });
+    socket.on("sendMyPlayers", (response) => {
+      // debounceMyPlayers(response.data);
+      setMyPlayers(response.data);
+      // console.log('debounced');
     });
     return () => {
       socket.off("sendTakenPlayers");
+      socket.off("sendAvailableSkaters");
+      socket.off("sendAvailableGoalies");
+      socket.off("sendMyPlayers");
     };
   }, []);
-  if (!availableGoalies || !availableSkaters) {
+  if (!availableGoalies || !availableSkaters || !myPlayers || !takenPlayers) {
     return <LoadingIcon />;
   }
   return (
@@ -75,7 +127,8 @@ function App() {
           <div className="flex flex-col flex-grow border-r border-gray-200 pt-5 pb-4 bg-white overflow-y-auto">
             {/* Sidebar */}
             <Sidebar
-              draftedPlayers={draftedPlayers}
+              takenPlayers={takenPlayers}
+              myPlayers={myPlayers}
               availableGoalies={availableGoalies}
               availableSkaters={availableSkaters}
             />
@@ -83,7 +136,7 @@ function App() {
         </div>
       </div>
       <div className="flex flex-col w-0 flex-1 overflow-hidden">
-        <div className="relative z-10 flex-shrink-0 flex  bg-white shadow">
+        {/* <div className="relative z-10 flex-shrink-0 flex  bg-white shadow">
           <div className="flex-1 px-4 flex justify-between">
             <div className="flex-1 flex">
               <FsiTotals
@@ -93,7 +146,7 @@ function App() {
               />
             </div>
           </div>
-        </div>
+        </div> */}
 
         <main
           className="flex-1 relative overflow-y-auto focus:outline-none"
@@ -105,14 +158,8 @@ function App() {
               {/* table  */}
               {/* /End replace */}
               <PlayerTables
-                availableSkaters={filterAvailablePlayers(
-                  draftedPlayers,
-                  availableSkaters
-                )}
-                availableGoalies={filterAvailablePlayers(
-                  draftedPlayers,
-                  availableGoalies
-                )}
+                availableSkaters={availableSkaters}
+                availableGoalies={availableGoalies}
                 isLoading={isLoading}
               />
             </div>

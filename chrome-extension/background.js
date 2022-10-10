@@ -20,7 +20,7 @@ chrome.runtime.onInstalled.addListener(function () {
 //send draft information to backend
 const sendNewPlayers = (data) => {
   let jsonData = JSON.stringify(data);
-  return fetch("http://localhost:3001/players/refreshPlayerList", {
+  return fetch("http://localhost:8080/players/takenPlayerList", {
     method: "POST",
     // mode: "cors",
     // credentials: "include",

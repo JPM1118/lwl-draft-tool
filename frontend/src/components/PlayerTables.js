@@ -7,21 +7,19 @@ function PlayerTables({ availableSkaters, availableGoalies, isLoading }) {
   return (
     <div>
       <div className="flex flex-no-wrap">
-        <a
-          href="#"
+        <button
           className={`${isSkaters && "underline"} cursor-pointer`}
           onClick={() => setIsSkaters(true)}
         >
           Skaters
-        </a>
+        </button>
         <span>/</span>
-        <a
-          href="#"
+        <button
           className={`${!isSkaters && "underline"} cursor-pointer`}
           onClick={() => setIsSkaters(false)}
         >
           Goalies
-        </a>
+        </button>
       </div>
       <div>
         {isSkaters ? (

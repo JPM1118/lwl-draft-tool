@@ -76,65 +76,16 @@ function SkaterTable(props) {
   };
 
   const columns = React.useMemo(
-    () => [
-      {
-        Header: "EDIFF",
-        accessor: "EDIFF",
-        disableFilters: true,
-      },
-      {
-        Header: "LWLRANK",
-        accessor: "LWLRANK",
-        disableFilters: true,
-      },
-      {
-        Header: "PLAYER",
-        accessor: "PLAYER",
-        disableFilters: true,
-      },
-      {
-        Header: "TEAM",
-        accessor: "TEAM",
-        disableFilters: true,
-      },
-
-      {
-        Header: "EADP",
-        accessor: "EADP",
-        disableFilters: true,
-      },
-      {
-        Header: "WFSI",
-        accessor: "WFSI",
-        disableFilters: true,
-      },
-      {
-        Header: "GAAFSI",
-        accessor: "GAAFSI",
-        disableFilters: true,
-      },
-      {
-        Header: "SVFSI",
-        accessor: "SVFSI",
-        disableFilters: true,
-      },
-      {
-        Header: "SVPCTFSI",
-        accessor: "SVPCTFSI",
-        disableFilters: true,
-      },
-      {
-        Header: "SHOFSI",
-        accessor: "SHOFSI",
-        disableFilters: true,
-      },
-      {
-        Header: "PR",
-        accessor: "PR",
-        disableFilters: true,
-      },
-    ],
-    []
+    () =>
+      Object.keys(availableGoalies[0]).map((key) => {
+        // debugger;
+        return {
+          Header: key,
+          accessor: key,
+          disableFilters: true,
+        };
+      }),
+    [availableGoalies]
   );
   const defaultColumn = {
     canFilter: false,

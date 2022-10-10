@@ -5,7 +5,6 @@ import LoadingIcon from "../elements/LoadingIcon";
 
 function SkaterTable(props) {
   const { availableSkaters, isLoading } = props;
-  const [programs, setPrograms] = useState([]);
 
   function SelectColumnFilter({
     column: { Header, filterValue, setFilter, preFilteredRows, id },
@@ -76,69 +75,16 @@ function SkaterTable(props) {
   };
 
   const columns = React.useMemo(
-    () => [
-      {
-        Header: "EDIFF",
-        accessor: "EDIFF",
-        disableFilters: true,
-      },
-      {
-        Header: "LWLRANK",
-        accessor: "LWLRANK",
-        disableFilters: true,
-      },
-      {
-        Header: "PLAYER",
-        accessor: "PLAYER",
-        disableFilters: true,
-      },
-      {
-        Header: "TEAM",
-        accessor: "TEAM",
-        disableFilters: true,
-      },
-      {
-        Header: "NHLPOS",
-        accessor: "NHLPOS",
-        disableFilters: true,
-      },
-      {
-        Header: "EADP",
-        accessor: "EADP",
-        disableFilters: true,
-      },
-      {
-        Header: "GFSI",
-        accessor: "GFSI",
-        disableFilters: true,
-      },
-      {
-        Header: "AFSI",
-        accessor: "AFSI",
-        disableFilters: true,
-      },
-      {
-        Header: "PIMFSI",
-        accessor: "PIMFSI",
-        disableFilters: true,
-      },
-      {
-        Header: "PPPFSI",
-        accessor: "PPPFSI",
-        disableFilters: true,
-      },
-      {
-        Header: "SOGFSI",
-        accessor: "SOGFSI",
-        disableFilters: true,
-      },
-      {
-        Header: "PR",
-        accessor: "PR",
-        disableFilters: true,
-      },
-    ],
-    []
+    () =>
+      Object.keys(availableSkaters[0]).map((key) => {
+        // debugger;
+        return {
+          Header: key,
+          accessor: key,
+          disableFilters: true,
+        };
+      }),
+    [availableSkaters]
   );
   const defaultColumn = {
     canFilter: false,

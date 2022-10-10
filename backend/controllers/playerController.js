@@ -1,6 +1,15 @@
 const apiHelpers = require("../helpers/apihelpers");
 const playerService = require("../services/playerService");
 
+async function getMyPlayers(req, res) {
+  try {
+    const results = await playerService.getMyPlayers();
+    apiHelpers.success(res, "", results);
+  } catch (error) {
+    apiHelpers.error(res, {}, error);
+    console.error(error);
+  }
+}
 async function getSkaters(req, res) {
   try {
     const results = await playerService.getSkaters();
@@ -19,9 +28,31 @@ async function getGoalies(req, res) {
     console.error(error);
   }
 }
-async function refreshPlayerList(req, res) {
+async function getTakenPlayerList(req, res) {
   try {
-    req.app.io.emit("sendTakenPlayers", { data: req.body });
+    const results = await playerService.getTakenPlayerList();
+    apiHelpers.success(res, "", results);
+  } catch (error) {
+    apiHelpers.error(res, {}, error);
+    console.error(error);
+  }
+}
+async function updateTakenPlayerList(req, res) {
+  try {
+    const data = req.body;
+    await playerService.updateTakenPlayerList(data);
+    const [takenPlayerList, availableGoalies, availableSkaters, myPlayers] =
+      await Promise.all([
+        playerService.getTakenPlayerList(),
+        playerService.getGoalies(),
+        playerService.getSkaters(),
+        playerService.getMyPlayers(),
+      ]);
+
+    req.app.io.emit("sendTakenPlayers", { data: takenPlayerList });
+    req.app.io.emit("sendAvailableSkaters", { data: availableSkaters });
+    req.app.io.emit("sendAvailableGoalies", { data: availableGoalies });
+    req.app.io.emit("sendMyPlayers", { data: myPlayers });
     //check if undone draft pick was user pick
 
     return res.status(200).json({ msg: "got it" });
@@ -32,7 +63,9 @@ async function refreshPlayerList(req, res) {
 }
 
 module.exports = {
+  getMyPlayers,
   getSkaters,
   getGoalies,
-  refreshPlayerList,
+  getTakenPlayerList,
+  updateTakenPlayerList,
 };

@@ -1,22 +1,27 @@
 import React from "react";
-import { filterMyPlayers } from "../helpers";
 
-function Sidebar({ draftedPlayers }) {
-  const [myPlayers, setMyPlayers] = React.useState(() =>
-    filterMyPlayers(draftedPlayers)
-  );
-  React.useEffect(() => {
-    (() => {
-      setMyPlayers(filterMyPlayers(draftedPlayers));
-    })();
-  }, [draftedPlayers]);
+function Sidebar({ myPlayers }) {
+  function isForward(POS) {
+    const forwardArray = ["C", "RW", "LW", "C/LW", "C/RW", "LW/RW"];
+
+    return forwardArray.some((_) => _ === POS);
+  }
+
   const findPositionTotal = (position) => {
+    if (position === "F") {
+      return myPlayers.reduce((acc, cur) => {
+        if (isForward(cur.POS)) {
+          return acc + 1;
+        } else return acc;
+      }, 0);
+    }
     return myPlayers.reduce((acc, cur) => {
-      if (cur.position === position) {
+      if (cur.POS === position) {
         return acc + 1;
       } else return acc;
     }, 0);
   };
+
   return (
     <div className="w-full">
       <h2 className="text-lg font-semibold text-center">My Team</h2>
@@ -25,60 +30,77 @@ function Sidebar({ draftedPlayers }) {
         <div className="mr-2">{`D:${findPositionTotal("D")}`}</div>
         <div>{`G:${findPositionTotal("G")}`}</div>
       </div>
-      <div className="text-center font-semibold mb-4">Forwards</div>
-      {myPlayers &&
-        myPlayers.map((player) => {
-          if (player.position === "F") {
-            return (
-              <div
-                key={player.pick}
-                className="flex flex-no-wrap justify-between items-start text-sm border-t px-4 py-2"
-              >
-                <div className="">
-                  <div className="font-semibold">{player.name}</div>
-                  <div className="uppercase">{player.team}</div>
+      {/* <hr /> */}
+      <div>
+        <div className="pl-2 font-semibold mt-4 uppercase text-gray-400">
+          Forwards
+        </div>
+        {myPlayers &&
+          myPlayers.map((player) => {
+            if (isForward(player.POS)) {
+              return (
+                <div
+                  key={player.total_projection_id}
+                  className="flex flex-no-wrap justify-between items-start text-sm px-4 py-2"
+                >
+                  <div className="">
+                    <div className="font-semibold">{player.NAME}</div>
+                    <div className="uppercase">{player.TEAM}</div>
+                  </div>
+                  <div>{player.POS}</div>
                 </div>
-                <div>{player.position}</div>
-              </div>
-            );
-          }
-        })}
-      <div className="text-center font-semibold mb-4">Defensemen</div>
-      {myPlayers &&
-        myPlayers.map((player) => {
-          if (player.position === "D") {
-            return (
-              <div
-                key={player.pick}
-                className="flex flex-no-wrap justify-between items-start text-sm border-t px-4 py-2"
-              >
-                <div className="">
-                  <div className="font-semibold">{player.name}</div>
-                  <div className="uppercase">{player.team}</div>
+              );
+            }
+          })}
+
+        <hr />
+      </div>
+      <div>
+        <div className="pl-2 uppercase font-semibold mt-4  text-gray-400">
+          Defensemen
+        </div>
+        {myPlayers &&
+          myPlayers.map((player) => {
+            if (player.POS === "D") {
+              return (
+                <div
+                  key={player.total_projection_id}
+                  className="flex flex-no-wrap justify-between items-start text-sm px-4 py-2"
+                >
+                  <div className="">
+                    <div className="font-semibold">{player.NAME}</div>
+                    <div className="uppercase">{player.TEAM}</div>
+                  </div>
+                  <div>{player.POS}</div>
                 </div>
-                <div>{player.position}</div>
-              </div>
-            );
-          }
-        })}
-      <div className="text-center font-semibold mb-4">Goalies</div>
-      {myPlayers &&
-        myPlayers.map((player) => {
-          if (player.position === "G") {
-            return (
-              <div
-                key={player.pick}
-                className="flex flex-no-wrap justify-between items-start text-sm border-t px-4 py-2"
-              >
-                <div className="">
-                  <div className="font-semibold">{player.name}</div>
-                  <div className="uppercase">{player.team}</div>
+              );
+            }
+          })}
+        <hr />
+      </div>
+      <div>
+        <div className="pl-2 uppercase font-semibold  mt-4 text-gray-400">
+          Goalies
+        </div>
+        {myPlayers &&
+          myPlayers.map((player) => {
+            if (player.POS === "G") {
+              return (
+                <div
+                  key={player.total_projection_id}
+                  className="flex flex-no-wrap justify-between items-start text-sm px-4 py-2"
+                >
+                  <div className="">
+                    <div className="font-semibold">{player.NAME}</div>
+                    <div className="uppercase">{player.TEAM}</div>
+                  </div>
+                  <div>{player.POS}</div>
                 </div>
-                <div>{player.position}</div>
-              </div>
-            );
-          }
-        })}
+              );
+            }
+          })}
+        <hr />
+      </div>
     </div>
   );
 }

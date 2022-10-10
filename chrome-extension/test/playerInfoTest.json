@@ -1,0 +1,106 @@
+[
+  { "name": "Connor McDavid", "team": "Edm", "position": "F", "myPick": true },
+  {
+    "name": "Igor Shesterkin",
+    "team": "NYR",
+    "position": "G",
+    "myPick": false
+  },
+  {
+    "name": "Auston Matthews",
+    "team": "Tor",
+    "position": "F",
+    "myPick": false
+  },
+  {
+    "name": "Kirill Kaprizov",
+    "team": "Min",
+    "position": "F",
+    "myPick": false
+  },
+  { "name": "Leon Draisaitl", "team": "Edm", "position": "F", "myPick": false },
+  {
+    "name": "Andrei Vasilevskiy",
+    "team": "TB",
+    "position": "G",
+    "myPick": false
+  },
+  { "name": "Ilya Sorokin", "team": "NYI", "position": "G", "myPick": false },
+  { "name": "Cale Makar", "team": "Col", "position": "D", "myPick": false },
+  { "name": "Juuse Saros", "team": "Nsh", "position": "G", "myPick": false },
+  { "name": "Jacob Markstrom", "team": "Cgy", "position": "G", "myPick": true },
+  { "name": "Adam Fox", "team": "NYR", "position": "D", "myPick": true },
+  { "name": "Mikko Rantanen", "team": "Col", "position": "F", "myPick": false },
+  { "name": "Tristan Jarry", "team": "Pit", "position": "G", "myPick": false },
+  {
+    "name": "Mitchell Marner",
+    "team": "Tor",
+    "position": "F",
+    "myPick": false
+  },
+  { "name": "Alex Ovechkin", "team": "Wsh", "position": "F", "myPick": false },
+  { "name": "Jack Campbell", "team": "Edm", "position": "G", "myPick": false },
+  {
+    "name": "Alexandar Georgiev",
+    "team": "Col",
+    "position": "G",
+    "myPick": false
+  },
+  { "name": "Steven Stamkos", "team": "TB", "position": "F", "myPick": false },
+  {
+    "name": "Nathan MacKinnon",
+    "team": "Col",
+    "position": "F",
+    "myPick": false
+  },
+  { "name": "John Carlson", "team": "Wsh", "position": "D", "myPick": true },
+  { "name": "Nikita Kucherov", "team": "TB", "position": "F", "myPick": true },
+  {
+    "name": "Aleksander Barkov",
+    "team": "Fla",
+    "position": "F",
+    "myPick": false
+  },
+  { "name": "Victor Hedman", "team": "TB", "position": "D", "myPick": false },
+  { "name": "Mika Zibanejad", "team": "NYR", "position": "F", "myPick": false },
+  { "name": "Brent Burns", "team": "Car", "position": "D", "myPick": false },
+  { "name": "Brady Tkachuk", "team": "Ott", "position": "F", "myPick": false },
+  { "name": "Sidney Crosby", "team": "Pit", "position": "F", "myPick": false },
+  { "name": "Jake Oettinger", "team": "Dal", "position": "G", "myPick": false },
+  { "name": "Kyle Connor", "team": "Wpg", "position": "F", "myPick": false },
+  { "name": "Darcy Kuemper", "team": "Wsh", "position": "G", "myPick": true },
+  { "name": "Matthew Tkachuk", "team": "Fla", "position": "F", "myPick": true },
+  { "name": "Jake Guentzel", "team": "Pit", "position": "F", "myPick": false },
+  { "name": "Nick Suzuki", "team": "Mon", "position": "F", "myPick": false },
+  { "name": "Roman Josi", "team": "Nsh", "position": "D", "myPick": false },
+  { "name": "David Pastrnak", "team": "Bos", "position": "F", "myPick": false },
+  {
+    "name": "Jonathan Huberdeau",
+    "team": "Cgy",
+    "position": "F",
+    "myPick": false
+  },
+  { "name": "Sam Reinhart", "team": "Fla", "position": "F", "myPick": false },
+  { "name": "J.T. Miller", "team": "Van", "position": "F", "myPick": false },
+  { "name": "Alex DeBrincat", "team": "Ott", "position": "F", "myPick": false },
+  { "name": "Roope Hintz", "team": "Dal", "position": "F", "myPick": true },
+  { "name": "Josh Norris", "team": "Ott", "position": "F", "myPick": true },
+  { "name": "Thatcher Demko", "team": "Van", "position": "G", "myPick": false },
+  {
+    "name": "Gabriel Landeskog",
+    "team": "Col",
+    "position": "F",
+    "myPick": false
+  },
+  { "name": "Patrik Laine", "team": "Cls", "position": "F", "myPick": false },
+  { "name": "Sebastian Aho", "team": "Car", "position": "F", "myPick": false },
+  {
+    "name": "Connor Hellebuyck",
+    "team": "Wpg",
+    "position": "G",
+    "myPick": false
+  },
+  { "name": "Artemi Panarin", "team": "NYR", "position": "F", "myPick": false },
+  { "name": "Joe Pavelski", "team": "Dal", "position": "F", "myPick": false },
+  { "name": "Jason Robertson", "team": "Dal", "position": "F", "myPick": false }
+]
